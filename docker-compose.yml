@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: electolibrary-backend
+    environment:
+      DATABASE_PATH: /app/data/tasks.db
+      ADMIN_PASSWORD: admin123
+      ADMIN_TOKEN: electolibrary-admin-token
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: electolibrary-frontend
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
